@@ -8,8 +8,9 @@ class ProductTable extends React.Component {
         super(props);
 
         this.sortByKeyAndOrder = this.sortByKeyAndOrder.bind(this);
-        this.handleDestroy = this.handleDestroy.bind(this)
-        this.handleSort = this.handleSort.bind(this)
+        this.handleDestroy = this.handleDestroy.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleSort = this.handleSort.bind(this);
 
         this.state = {
           sort: {
@@ -55,6 +56,10 @@ class ProductTable extends React.Component {
         this.props.onDestroy(id);
     }
 
+    handleUpdate(id) {
+        this.props.onUpdate(id);
+    }
+
     handleSort(column, direction) {
         this.setState({
           sort: {
@@ -78,6 +83,7 @@ class ProductTable extends React.Component {
                     product={product} 
                     key={product.id} 
                     onDestroy={this.handleDestroy}
+                    onUpdate={this.handleUpdate}
                 />
             );
         });

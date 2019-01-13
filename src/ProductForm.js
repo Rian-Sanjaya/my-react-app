@@ -9,8 +9,7 @@ class ProductForm extends React.Component {
         this.handleSave = this.handleSave.bind(this);
         this.state = {
           product: Object.assign({}, RESET_VALUES),
-          errors: {},
-          isFormValid: true
+          errors: ''
         };
     }
 
@@ -18,27 +17,46 @@ class ProductForm extends React.Component {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-    
+
         this.setState((prevState) => {
           prevState.product[name] = value;
           return { product: prevState.product };
         });
+
+        if (name === 'name') {
+            this.setState( (prevState) => {
+                let val = value === '' ? 'name cannot empty' : '';
+                return {errors: val};
+            })
+        }
     }
 
     handleSave(e) {
+        if (this.state.errors || this.state.product.name === '') {
+            this.setState({
+                errors: 'name cannot empty'
+            })
+            return;
+        } 
+
         this.props.onSave(this.state.product);
         this.setState({
           product: Object.assign({}, RESET_VALUES),
-          errors: {}
+          errors: ''
         });
         e.preventDefault();
     }
-    
-    // formValidation(e) {
-
-    // }
 
     render() {
+        const { name } = this.props.formProduct;
+        if (name) {
+            console.log(name);
+            // this.setState( (prevState) => {
+            //     prevState.product[name] = name;
+            //     return { product: prevState.product };
+            // });
+        }
+
         return (
             <div>
                 <form>
@@ -48,6 +66,10 @@ class ProductForm extends React.Component {
                             Name
                             <br/>
                             <input type='text' name='name' onChange={this.handleChange} value={this.state.product.name} />
+                            {
+                                this.state.errors && 
+                                <span>&nbsp;Name cannot empty</span>
+                            }
                         </label>
                     </p>
                     <p>
