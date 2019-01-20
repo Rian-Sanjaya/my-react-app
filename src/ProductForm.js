@@ -55,7 +55,7 @@ class ProductForm extends React.Component {
             //     prevState.product[name] = name;
             //     return { product: prevState.product };
             // });
-        }
+        } 
 
         return (
             <div>
@@ -65,7 +65,8 @@ class ProductForm extends React.Component {
                         <label>
                             Name
                             <br/>
-                            <input type='text' name='name' onChange={this.handleChange} value={this.state.product.name} />
+                            {/* <input type='text' name='name' onChange={this.handleChange} value={this.state.product.name} /> */}
+                            <input type='text' name='name' onChange={this.handleChange} value={ name ? name : this.state.product.name} />
                             {
                                 this.state.errors && 
                                 <span>&nbsp;Name cannot empty</span>
